@@ -1,4 +1,5 @@
 import { PrismaClient, Role } from "@prisma/client";
+import * as bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -10,10 +11,14 @@ async function main() {
   await prisma.user.deleteMany();
 
   console.log("Seeding users...");
+  const librarianPassword = await bcrypt.hash("librarian123", 10);
+  const patronPassword = await bcrypt.hash("patron123", 10);
+
   await prisma.user.create({
     data: {
       email: "librarian@plp.dev",
       name: "Chief Librarian",
+      password: librarianPassword,
       role: Role.LIBRARIAN,
     },
   });
@@ -22,6 +27,7 @@ async function main() {
     data: {
       email: "patron@plp.dev",
       name: "John Patron",
+      password: patronPassword,
       role: Role.PATRON,
     },
   });
@@ -59,24 +65,32 @@ async function main() {
         title: "Dune",
         author: "Frank Herbert",
         isbn: "978-0441172719",
+        totalCopies: 5,
+        availableCopies: 5,
         genreId: sciFi.id,
       },
       {
         title: "Neuromancer",
         author: "William Gibson",
         isbn: "978-0441569595",
+        totalCopies: 3,
+        availableCopies: 3,
         genreId: sciFi.id,
       },
       {
         title: "Foundation",
         author: "Isaac Asimov",
         isbn: "978-0553293357",
+        totalCopies: 4,
+        availableCopies: 4,
         genreId: sciFi.id,
       },
       {
         title: "Snow Crash",
         author: "Neal Stephenson",
         isbn: "978-0553380958",
+        totalCopies: 2,
+        availableCopies: 2,
         genreId: sciFi.id,
       },
 
@@ -84,24 +98,32 @@ async function main() {
         title: "The Hobbit",
         author: "J.R.R. Tolkien",
         isbn: "978-0547928227",
+        totalCopies: 6,
+        availableCopies: 6,
         genreId: fantasy.id,
       },
       {
         title: "A Game of Thrones",
         author: "George R.R. Martin",
         isbn: "978-0553593716",
+        totalCopies: 4,
+        availableCopies: 4,
         genreId: fantasy.id,
       },
       {
         title: "The Name of the Wind",
         author: "Patrick Rothfuss",
         isbn: "978-0756404741",
+        totalCopies: 3,
+        availableCopies: 3,
         genreId: fantasy.id,
       },
       {
         title: "The Way of Kings",
         author: "Brandon Sanderson",
         isbn: "978-0765365279",
+        totalCopies: 3,
+        availableCopies: 3,
         genreId: fantasy.id,
       },
 
@@ -109,24 +131,32 @@ async function main() {
         title: "The Da Vinci Code",
         author: "Dan Brown",
         isbn: "978-0307474278",
+        totalCopies: 5,
+        availableCopies: 5,
         genreId: mystery.id,
       },
       {
         title: "Gone Girl",
         author: "Gillian Flynn",
         isbn: "978-0307588371",
+        totalCopies: 4,
+        availableCopies: 4,
         genreId: mystery.id,
       },
       {
         title: "The Girl with the Dragon Tattoo",
         author: "Stieg Larsson",
         isbn: "978-0307949486",
+        totalCopies: 3,
+        availableCopies: 3,
         genreId: mystery.id,
       },
       {
         title: "And Then There Were None",
         author: "Agatha Christie",
         isbn: "978-0062073488",
+        totalCopies: 5,
+        availableCopies: 5,
         genreId: mystery.id,
       },
 
@@ -134,24 +164,32 @@ async function main() {
         title: "Sapiens",
         author: "Yuval Noah Harari",
         isbn: "978-0062316097",
+        totalCopies: 6,
+        availableCopies: 6,
         genreId: nonFiction.id,
       },
       {
         title: "Atomic Habits",
         author: "James Clear",
         isbn: "978-0735211292",
+        totalCopies: 8,
+        availableCopies: 8,
         genreId: nonFiction.id,
       },
       {
         title: "Educated",
         author: "Tara Westover",
         isbn: "978-0399590504",
+        totalCopies: 4,
+        availableCopies: 4,
         genreId: nonFiction.id,
       },
       {
         title: "Thinking, Fast and Slow",
         author: "Daniel Kahneman",
         isbn: "978-0374533557",
+        totalCopies: 4,
+        availableCopies: 4,
         genreId: nonFiction.id,
       },
     ],

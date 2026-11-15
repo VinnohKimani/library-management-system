@@ -17,6 +17,7 @@ model User {
   id        String   @id @default(uuid())
   email     String   @unique
   name      String
+  password  String   @default("")
   role      Role     @default(PATRON)
   reviews   Review[]
   createdAt DateTime @default(now())
@@ -33,16 +34,18 @@ model Genre {
 }
 
 model Book {
-  id          String   @id @default(uuid())
-  title       String
-  author      String
-  isbn        String   @unique
-  publishedAt DateTime?
-  genreId     String
-  genre       Genre    @relation(fields: [genreId], references: [id], onDelete: Cascade)
-  reviews     Review[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              String    @id @default(uuid())
+  title           String
+  author          String
+  isbn            String    @unique
+  totalCopies     Int       @default(1)
+  availableCopies Int       @default(1)
+  publishedAt     DateTime?
+  genreId         String
+  genre           Genre     @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  reviews         Review[]
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Review {
