@@ -1,4 +1,7 @@
 node_modules/
-.env
 dist/
 .DS_Store
+.env
+!.env.example
+!client/.env
+!client/.env.example
